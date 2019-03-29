@@ -54,15 +54,17 @@ public class C_CouponController extends C_BaseController {
         QueryWrapper<MemberCouponDO> queryWrapper = null;
         switch (status) {
             case 1:
+                // 可使用
                 query.setStatus(1);
                 query.setServiceEndDateL(now);
                 break;
             case 0:
+                // 已使用
                 query.setStatus(0);
                 query.setServiceEndDateL(now);
                 break;
             case -1:
-                //query.setStatus(0);
+                // 已过期
                 query.setServiceEndDateR(now);
                 break;
             default:

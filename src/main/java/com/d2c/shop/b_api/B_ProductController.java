@@ -55,20 +55,24 @@ public class B_ProductController extends B_BaseController {
             Date now = new Date();
             switch (query.getCrowd()) {
                 case 1:
+                    // 拼团进行中
                     query.setCrowd(1);
                     query.setCrowdStartDateR(now);
                     query.setCrowdEndDateL(now);
                     break;
                 case 0:
+                    // 拼团未开始
                     query.setCrowd(1);
                     query.setCrowdStartDateL(now);
                     break;
                 case -1:
+                    // 拼团已结束
                     query.setCrowd(null);
                     queryWrapper = QueryUtil.buildWrapper(query);
                     queryWrapper.and(i -> i.eq("crowd", -1).or().lt("crowd_end_date", now));
                     break;
                 case 8:
+                    // 正常商品和拼团已过期
                     query.setCrowd(null);
                     queryWrapper = QueryUtil.buildWrapper(query);
                     queryWrapper.and(i -> i.le("crowd", 0).or().lt("crowd_end_date", now));

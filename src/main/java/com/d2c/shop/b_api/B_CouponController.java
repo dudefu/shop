@@ -55,15 +55,18 @@ public class B_CouponController extends B_BaseController {
         } else {
             switch (status) {
                 case 1:
+                    // 可领取
                     query.setStatus(1);
                     query.setReceiveStartDateR(now);
                     query.setReceiveEndDateL(now);
                     break;
                 case 0:
+                    // 未开始
                     query.setStatus(1);
                     query.setReceiveStartDateL(now);
                     break;
                 case -1:
+                    // 已失效
                     query.setStatus(null);
                     queryWrapper = QueryUtil.buildWrapper(query);
                     queryWrapper.and(i -> i.eq("status", 0).or().lt("receive_end_date", now));

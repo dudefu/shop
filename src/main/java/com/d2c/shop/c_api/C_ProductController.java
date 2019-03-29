@@ -65,6 +65,7 @@ public class C_ProductController extends C_BaseController {
         if (query.getCategoryId() != null) {
             ProductCategoryDO pc = productCategoryService.getById(query.getCategoryId());
             if (pc != null && pc.getParentId() == null) {
+                // 一级大类特殊处理
                 query.setCategoryId(null);
                 ProductCategoryQuery pcq = new ProductCategoryQuery();
                 pcq.setParentId(pc.getId());
@@ -79,20 +80,24 @@ public class C_ProductController extends C_BaseController {
             Date now = new Date();
             switch (query.getCrowd()) {
                 case 1:
+                    // 拼团进行中
                     query.setCrowd(1);
                     query.setCrowdStartDateR(now);
                     query.setCrowdEndDateL(now);
                     break;
                 case 0:
+                    // 拼团未开始
                     query.setCrowd(1);
                     query.setCrowdStartDateL(now);
                     break;
                 case -1:
+                    // 拼团已结束
                     query.setCrowd(null);
                     queryWrapper = QueryUtil.buildWrapper(query);
                     queryWrapper.and(i -> i.eq("crowd", -1).or().lt("crowd_end_date", now));
                     break;
                 case 8:
+                    // 正常商品和拼团已过期
                     query.setCrowd(null);
                     queryWrapper = QueryUtil.buildWrapper(query);
                     queryWrapper.and(i -> i.le("crowd", 0).or().lt("crowd_end_date", now));
