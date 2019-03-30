@@ -44,9 +44,9 @@ public class OrderCouponHandler implements OrderHandler {
         // 辨别得到符合条件（商品关系，门槛金额）的优惠券模板
         Map<Long, CouponDO> availableMap = this.distinguish(order, couponList);
         if (availableMap.get(coupon.getId()) != null) {
-            order.setCouponId(coupon.getId());
+            order.setCouponId(memberCoupon.getId());
             order.setCouponAmount(coupon.getAmount());
-            order.setPayAmount(order.getProductAmount().subtract(order.getCouponAmount()));
+            order.setPayAmount(order.getProductAmount().subtract(coupon.getAmount()));
             // 加权拆分优惠券金额
             this.split(order, coupon);
         }
@@ -223,7 +223,7 @@ public class OrderCouponHandler implements OrderHandler {
                 validItem.setCouponWeightingAmount(couponAmount.subtract(splitAmount));
                 validItem.setPayAmount(validItem.getPayAmount().subtract(validItem.getCouponWeightingAmount()));
             } else {
-                BigDecimal weightingAmount = validItem.getPayAmount().divide(totalAmount, 4, BigDecimal.ROUND_HALF_UP).multiply(couponAmount).setScale(2, BigDecimal.ROUND_HALF_UP);
+                BigDecimal weightingAmount = validItem.getPayAmount().multiply(couponAmount).divide(totalAmount, 2, BigDecimal.ROUND_HALF_UP);
                 validItem.setCouponWeightingAmount(weightingAmount);
                 validItem.setPayAmount(validItem.getPayAmount().subtract(validItem.getCouponWeightingAmount()));
                 splitAmount = splitAmount.add(weightingAmount);
