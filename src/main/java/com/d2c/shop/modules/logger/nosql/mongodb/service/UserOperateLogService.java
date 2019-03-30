@@ -52,7 +52,7 @@ public class UserOperateLogService {
         Query query = Query.query(Criteria
                 .where("memberId").is(memberId)
                 .and("shopId").is(shopId));
-        Pageable pageable = PageRequest.of((int) page.getCurrent(), (int) page.getSize());
+        Pageable pageable = PageRequest.of((int) page.getCurrent() - 1, (int) page.getSize());
         query.with(pageable);
         query.with(new Sort(Sort.Direction.DESC, "time"));
         List<UserOperateLog> list = mongoTemplate.find(query, UserOperateLog.class);
@@ -61,6 +61,7 @@ public class UserOperateLogService {
         Page<UserOperateLog> pager = new Page<>();
         pager.setCurrent(page.getCurrent());
         pager.setSize(page.getSize());
+        pager.setPages(result.getTotalPages());
         pager.setTotal(result.getTotalElements());
         pager.setRecords(result.getContent());
         return pager;
