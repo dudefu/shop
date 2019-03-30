@@ -40,7 +40,7 @@ public class DahantcClient {
         json.put("msgid", "");
         json.put("phones", phones);
         json.put("content", content);
-        json.put("sign", ACCOUNT_SIGN);
+        json.put("sign", null);
         json.put("subcode", null);
         json.put("sendtime", null);
         try {
