@@ -12,7 +12,7 @@ public interface SmsConstant {
     /**
      * 商户签名
      */
-    String ACCOUNT_SIGN = "【赋能店铺】";
+    String ACCOUNT_SIGN = "赋能店铺";
     /**
      * 短信验证码模板
      */
