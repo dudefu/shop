@@ -605,6 +605,7 @@ CREATE TABLE `P_PRODUCT_SKU`  (
   `product_id` bigint(20) NULL DEFAULT NULL COMMENT '商品ID',
   `standard` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '规格',
   `sell_price` decimal(16, 2) NULL DEFAULT NULL COMMENT '销售价',
+  `status` tinyint(2) NULL DEFAULT NULL COMMENT '状态 1,0',
   `virtual` tinyint(2) NULL DEFAULT NULL COMMENT '虚拟 1,0',
   `stock` int(10) NULL DEFAULT NULL COMMENT '库存',
   `warn_stock` int(10) NULL DEFAULT NULL COMMENT '预警库存',

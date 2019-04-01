@@ -161,6 +161,11 @@ public class B_ProductController extends B_BaseController {
         entity.setId(id);
         entity.setStatus(status);
         productService.updateById(entity);
+        ProductSkuQuery query = new ProductSkuQuery();
+        query.setProductId(id);
+        ProductSkuDO sku = new ProductSkuDO();
+        sku.setStatus(status);
+        productSkuService.update(sku, QueryUtil.buildWrapper(query));
         return Response.restResult(null, ResultCode.SUCCESS);
     }
 

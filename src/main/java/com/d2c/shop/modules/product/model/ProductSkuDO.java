@@ -36,6 +36,9 @@ public class ProductSkuDO extends BaseDelDO {
     @ApiModelProperty(value = "销售价")
     private BigDecimal sellPrice;
     @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "状态 1,0")
+    private Integer status;
+    @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "虚拟 1,0")
     private Integer virtual;
     @Assert(type = AssertEnum.NOT_NULL)
