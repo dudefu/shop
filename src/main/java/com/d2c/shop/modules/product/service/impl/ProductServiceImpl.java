@@ -35,6 +35,7 @@ public class ProductServiceImpl extends BaseService<ProductMapper, ProductDO> im
         for (ProductSkuDO sku : product.getSkuList()) {
             sku.setProductId(product.getId());
             sku.setShopId(product.getShopId());
+            sku.setStatus(product.getStatus());
             sku.setVirtual(product.getVirtual());
             productSkuService.save(sku);
         }
@@ -55,6 +56,7 @@ public class ProductServiceImpl extends BaseService<ProductMapper, ProductDO> im
                 // 更新
                 sku.setProductId(product.getId());
                 sku.setShopId(product.getShopId());
+                sku.setStatus(product.getStatus());
                 sku.setVirtual(product.getVirtual());
                 productSkuService.updateById(sku);
                 oldMap.remove(sku.getId());
@@ -62,6 +64,7 @@ public class ProductServiceImpl extends BaseService<ProductMapper, ProductDO> im
                 // 新增
                 sku.setProductId(product.getId());
                 sku.setShopId(product.getShopId());
+                sku.setStatus(product.getStatus());
                 sku.setVirtual(product.getVirtual());
                 productSkuService.save(sku);
             }
