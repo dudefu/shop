@@ -66,13 +66,15 @@ public class C_ProductController extends C_BaseController {
             ProductCategoryDO pc = productCategoryService.getById(query.getCategoryId());
             if (pc != null && pc.getParentId() == null) {
                 // 一级大类特殊处理
-                query.setCategoryId(null);
                 ProductCategoryQuery pcq = new ProductCategoryQuery();
                 pcq.setParentId(pc.getId());
                 List<ProductCategoryDO> children = productCategoryService.list(QueryUtil.buildWrapper(pcq));
                 List<Long> categoryIds = new ArrayList<>();
                 children.forEach(item -> categoryIds.add(item.getId()));
-                query.setCategoryIds(categoryIds.toArray(new Long[0]));
+                if (categoryIds.size() > 0) {
+                    query.setCategoryId(null);
+                    query.setCategoryIds(categoryIds.toArray(new Long[0]));
+                }
             }
         }
         // 拼团参数
