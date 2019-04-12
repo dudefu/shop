@@ -10,8 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 
-import static com.d2c.shop.common.sdk.sms.SmsConstant.ACCOUNT_SIGN;
-
 /**
  * @author Cai
  */
