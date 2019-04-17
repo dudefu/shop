@@ -1,4 +1,4 @@
-package com.d2c.shop.common.sdk.sms;
+package com.d2c.shop.common.sdk.sms.dahantc;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -21,12 +21,12 @@ public class DahantcClient {
     private static String PASSWORD;
     private static RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${shop.sms.dahantc.account}")
+    @Value("${store.sms.dahantc.account}")
     public void setACCOUNT(String ACCOUNT) {
         DahantcClient.ACCOUNT = ACCOUNT;
     }
 
-    @Value("${shop.sms.dahantc.password}")
+    @Value("${store.sms.dahantc.password}")
     public void setPASSWORD(String PASSWORD) {
         DahantcClient.PASSWORD = PASSWORD;
     }

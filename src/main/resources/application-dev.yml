@@ -111,6 +111,9 @@ shop:
     dahantc:
       account: ENC(UX8bZOr3oWSvBczS+9SsRA==)
       password: ENC(4uCdGxmEQtkdF+Pgl+GVkIE1xpUn36f0)
+    emay:
+      app-id: ENC(XQog7PISRxUqqMbp13596SRyjFgN1jPA9Xeptahdv4E=)
+      secret-key: ENC(SWDJ+0cXQrvtMRn/6UbXHYg8WFEsI2Fsm37V54Ogo2U=)
 
 #logging:
 #  level:

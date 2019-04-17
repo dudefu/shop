@@ -12,4 +12,6 @@ public interface CrowdGroupService extends IService<CrowdGroupDO> {
 
     int doCancel(Long id, String avatars);
 
+    void doSendCrowdCoupon(CrowdGroupDO crowdGroup);
+
 }

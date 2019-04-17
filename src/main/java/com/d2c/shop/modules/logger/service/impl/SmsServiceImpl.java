@@ -4,8 +4,8 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.d2c.shop.common.api.Asserts;
 import com.d2c.shop.common.api.base.BaseService;
-import com.d2c.shop.common.sdk.sms.DahantcClient;
 import com.d2c.shop.common.sdk.sms.SmsConstant;
+import com.d2c.shop.common.sdk.sms.emay.EmayClient;
 import com.d2c.shop.common.utils.QueryUtil;
 import com.d2c.shop.modules.logger.mapper.SmsMapper;
 import com.d2c.shop.modules.logger.model.SmsDO;
@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class SmsServiceImpl extends BaseService<SmsMapper, SmsDO> implements SmsService {
 
     @Autowired
-    private DahantcClient dahantcClient;
+    private EmayClient emayClient;
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -47,7 +47,7 @@ public class SmsServiceImpl extends BaseService<SmsMapper, SmsDO> implements Sms
         query.setMobile(mobile);
         this.remove(QueryUtil.buildWrapper(query));
         boolean success = this.save(sms);
-        if (success) dahantcClient.sendSMS(mobile, content);
+        if (success) emayClient.sendSMS(mobile, content);
         return success;
     }
 

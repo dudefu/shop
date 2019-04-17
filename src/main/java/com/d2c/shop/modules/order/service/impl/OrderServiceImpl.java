@@ -1,6 +1,5 @@
 package com.d2c.shop.modules.order.service.impl;
 
-import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.d2c.shop.common.api.base.BaseService;
 import com.d2c.shop.common.utils.ExecutorUtil;
@@ -25,17 +24,12 @@ import com.d2c.shop.modules.order.service.CrowdGroupService;
 import com.d2c.shop.modules.order.service.OrderItemService;
 import com.d2c.shop.modules.order.service.OrderService;
 import com.d2c.shop.modules.order.service.PaymentService;
-import com.d2c.shop.modules.product.model.CouponDO;
-import com.d2c.shop.modules.product.model.ProductDO;
-import com.d2c.shop.modules.product.service.CouponService;
-import com.d2c.shop.modules.product.service.ProductService;
 import com.d2c.shop.modules.product.service.ProductSkuService;
 import com.d2c.shop.rabbitmq.sender.OrderDelayedSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -52,15 +46,11 @@ public class OrderServiceImpl extends BaseService<OrderMapper, OrderDO> implemen
     @Autowired
     private PaymentService paymentService;
     @Autowired
-    private ProductService productService;
-    @Autowired
     private ProductSkuService productSkuService;
     @Autowired
     private CrowdGroupService crowdGroupService;
     @Autowired
     private MemberService memberService;
-    @Autowired
-    private CouponService couponService;
     @Autowired
     private MemberCouponService memberCouponService;
     @Autowired
@@ -177,7 +167,7 @@ public class OrderServiceImpl extends BaseService<OrderMapper, OrderDO> implemen
                     // 虚拟商品明细状态-已收货
                     noi.setStatus(OrderItemDO.StatusEnum.RECEIVED.name());
                     // 发放拼团优惠券
-                    this.sendCrowdCoupon(crowdGroup);
+                    crowdGroupService.doSendCrowdCoupon(crowdGroup);
                 } else {
                     // 普通商品明细状态-待发货
                     noi.setStatus(OrderItemDO.StatusEnum.WAIT_DELIVER.name());
@@ -195,35 +185,6 @@ public class OrderServiceImpl extends BaseService<OrderMapper, OrderDO> implemen
                 }
         );
         return success;
-    }
-
-    // 发放拼团优惠券
-    private void sendCrowdCoupon(CrowdGroupDO crowdGroup) {
-        ProductDO product = productService.getById(crowdGroup.getProductId());
-        CouponDO coupon = couponService.getById(product.getCouponId());
-        if (coupon != null) {
-            OrderItemQuery noiq = new OrderItemQuery();
-            noiq.setCrowdId(crowdGroup.getId());
-            noiq.setStatus(new String[]{OrderItemDO.StatusEnum.PAID.name()});
-            List<OrderItemDO> oiList = orderItemService.list(QueryUtil.buildWrapper(noiq));
-            for (OrderItemDO item : oiList) {
-                MemberCouponDO memberCoupon = new MemberCouponDO();
-                memberCoupon.setMemberId(item.getMemberId());
-                memberCoupon.setCouponId(coupon.getId());
-                memberCoupon.setShopId(item.getShopId());
-                memberCoupon.setShopName(item.getShopName());
-                memberCoupon.setStatus(1);
-                Date serviceStartDate = coupon.getServiceStartDate();
-                Date serviceEndDate = coupon.getServiceEndDate();
-                if (coupon.getServiceSustain() != null && coupon.getServiceSustain() > 0) {
-                    serviceStartDate = new Date();
-                    serviceEndDate = DateUtil.offsetHour(serviceStartDate, coupon.getServiceSustain());
-                }
-                memberCoupon.setServiceStartDate(serviceStartDate);
-                memberCoupon.setServiceEndDate(serviceEndDate);
-                memberCouponService.doSend(memberCoupon);
-            }
-        }
     }
 
     // 最后统计消费
