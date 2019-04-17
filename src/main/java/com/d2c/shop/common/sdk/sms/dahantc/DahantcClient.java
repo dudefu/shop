@@ -21,12 +21,12 @@ public class DahantcClient {
     private static String PASSWORD;
     private static RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${store.sms.dahantc.account}")
+    @Value("${shop.sms.dahantc.account}")
     public void setACCOUNT(String ACCOUNT) {
         DahantcClient.ACCOUNT = ACCOUNT;
     }
 
-    @Value("${store.sms.dahantc.password}")
+    @Value("${shop.sms.dahantc.password}")
     public void setPASSWORD(String PASSWORD) {
         DahantcClient.PASSWORD = PASSWORD;
     }

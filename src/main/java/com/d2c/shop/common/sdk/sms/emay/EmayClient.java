@@ -25,12 +25,12 @@ public class EmayClient {
     private static String ALGORITHM = "AES/ECB/PKCS5Padding";
     private static String ENCODE = "UTF-8";
 
-    @Value("${store.sms.emay.app-id}")
+    @Value("${shop.sms.emay.app-id}")
     public void setAppId(String appId) {
         APP_ID = appId;
     }
 
-    @Value("${store.sms.emay.secret-key}")
+    @Value("${shop.sms.emay.secret-key}")
     public void setSecretKey(String secretKey) {
         SECRET_KEY = secretKey;
     }
