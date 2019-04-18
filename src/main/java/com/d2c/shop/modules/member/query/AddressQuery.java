@@ -15,9 +15,6 @@ import lombok.EqualsAndHashCode;
 public class AddressQuery extends BaseQuery {
 
     @Condition(condition = ConditionEnum.EQ)
-    @ApiModelProperty(value = "ID")
-    private Long id;
-    @Condition(condition = ConditionEnum.EQ)
     @ApiModelProperty(value = "会员ID")
     private Long memberId;
 
