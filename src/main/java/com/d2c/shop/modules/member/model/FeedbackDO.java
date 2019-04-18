@@ -21,11 +21,14 @@ public class FeedbackDO extends BaseDO {
 
     @Prevent
     @Assert(type = AssertEnum.NOT_NULL)
-    @ApiModelProperty(value = "会员ID")
-    private Long memberId;
+    @ApiModelProperty(value = "店铺ID")
+    private Long shopId;
     @Assert(type = AssertEnum.NOT_NULL)
-    @ApiModelProperty(value = "会员账号")
-    private String memberAccount;
+    @ApiModelProperty(value = "店员ID")
+    private Long shopKeeperId;
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "店员账号")
+    private String shopKeeperAccount;
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "内容")
     private String content;
