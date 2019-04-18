@@ -20,5 +20,11 @@ public class ShopQuery extends BaseQuery {
     @Condition(condition = ConditionEnum.EQ)
     @ApiModelProperty(value = "商户名称")
     private String enterprise;
+    @Condition(condition = ConditionEnum.EQ)
+    @ApiModelProperty(value = "认证 1,0")
+    private Integer authenticate;
+    @Condition(condition = ConditionEnum.EQ)
+    @ApiModelProperty(value = "电话")
+    private String telephone;
 
 }
