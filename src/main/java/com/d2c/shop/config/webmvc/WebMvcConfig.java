@@ -1,4 +1,4 @@
-package com.d2c.shop.config.security;
+package com.d2c.shop.config.webmvc;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

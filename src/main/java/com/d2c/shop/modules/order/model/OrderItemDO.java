@@ -1,5 +1,6 @@
 package com.d2c.shop.modules.order.model;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -39,18 +40,22 @@ public class OrderItemDO extends BaseDelDO implements ITradeItem {
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "会员账号")
     private String memberAccount;
+    @Excel(name = "商品ID")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "商品ID")
     private Long productId;
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "商品SKU的ID")
     private Long productSkuId;
+    @Excel(name = "商品数量")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "商品数量")
     private Integer quantity;
+    @Excel(name = "商品规格")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "商品规格")
     private String standard;
+    @Excel(name = "商品名称")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "商品名称")
     private String productName;
@@ -67,9 +72,11 @@ public class OrderItemDO extends BaseDelDO implements ITradeItem {
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "类型")
     private String type;
+    @Excel(name = "状态", replace = {"待付款_WAIT_PAY", "已付款_PAID", "待发货_WAIT_DELIVER", "已发货_DELIVERED", "已收货_RECEIVED", "交易成功_SUCCESS", "待退款_WAIT_REFUND", "已退款_REFUNDED", "交易关闭_CLOSED"})
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "状态")
     private String status;
+    @Excel(name = "虚拟", replace = {"虚拟_1", "正常_0"})
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "虚拟 1,0")
     private Integer virtual;
@@ -77,22 +84,28 @@ public class OrderItemDO extends BaseDelDO implements ITradeItem {
     private String paymentType;
     @ApiModelProperty(value = "支付流水")
     private String paymentSn;
+    @Excel(name = "商品单价")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "商品单价")
     private BigDecimal productPrice;
+    @Excel(name = "实时单价")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "实时单价")
     private BigDecimal realPrice;
+    @Excel(name = "实际支付")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "实际支付")
     private BigDecimal payAmount;
+    @Excel(name = "优惠券折减")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "优惠券加权折减")
     private BigDecimal couponWeightingAmount;
     @ApiModelProperty(value = "拼团团ID")
     private Long crowdId;
+    @Excel(name = "物流公司")
     @ApiModelProperty(value = "物流公司")
     private String logisticsCom;
+    @Excel(name = "物流单号")
     @ApiModelProperty(value = "物流单号")
     private String logisticsNum;
     @TableField(exist = false)

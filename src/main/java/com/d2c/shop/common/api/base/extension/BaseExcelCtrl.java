@@ -38,7 +38,7 @@ public abstract class BaseExcelCtrl<E extends BaseDO, Q extends BaseQuery> exten
     public List<Object> selectListForExcelExport(Object o, int i) {
         Q query = (Q) o;
         Page page = new Page(i, PageModel.MAX_SIZE, false);
-        List<E> list = service.page(page, QueryUtil.buildWrapper(query)).getRecords();
+        List<E> list = service.page(page, QueryUtil.buildWrapper(query, false)).getRecords();
         List<Object> result = new ArrayList<>();
         result.addAll(list);
         return result;
@@ -48,7 +48,7 @@ public abstract class BaseExcelCtrl<E extends BaseDO, Q extends BaseQuery> exten
     @RequestMapping(value = "/excel/page", method = RequestMethod.GET)
     public R excelPage(PageModel page, Q query, ModelMap map, HttpServletRequest request,
                        HttpServletResponse response) {
-        ExportParams params = new ExportParams("excel数据表", "sheet", ExcelType.XSSF);
+        ExportParams params = new ExportParams("excel数据表", "sheet1", ExcelType.XSSF);
         map.put(BigExcelConstants.CLASS, ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
         map.put(BigExcelConstants.PARAMS, params);
         map.put(BigExcelConstants.DATA_PARAMS, query);

@@ -5,6 +5,11 @@ server:
     max-threads: 1000
     min-spare-threads: 30
 
+management:
+  health:
+    elasticsearch:
+      enabled: false
+
 # spring
 spring:
   datasource:
@@ -74,18 +79,11 @@ ignored:
   urls:
     - /b_api/**
     - /c_api/**
-    - /test/**
-    - /druid/**
+    - /login/expired
     - /swagger-ui.html
     - /swagger-resources/**
     - /swagger/**
     - /**/v2/api-docs
-    - /**/*.js
-    - /**/*.css
-    - /**/*.png
-    - /**/*.ico
-    - /back/user/expired
-    - /back/user/insert
 
 # shop-sdk
 shop:

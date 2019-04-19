@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.d2c.shop.common.api.Asserts;
 import com.d2c.shop.common.api.PageModel;
-import com.d2c.shop.common.api.Response;
 import com.d2c.shop.common.api.ResultCode;
 import com.d2c.shop.common.api.base.extension.BaseExcelCtrl;
 import com.d2c.shop.common.utils.QueryUtil;
@@ -34,14 +33,9 @@ public class UserController extends BaseExcelCtrl<UserDO, UserQuery> {
     @Autowired
     private UserRoleService userRoleService;
 
-    @ApiOperation(value = "登录过期")
-    @RequestMapping(value = "/expired", method = RequestMethod.GET)
-    public R expired() {
-        return Response.failed(ResultCode.ACCESS_DENIED);
-    }
-
     @Override
     @ApiOperation(value = "用户注册")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public R<UserDO> insert(@RequestBody UserDO user) {
         Asserts.notNull(ResultCode.REQUEST_PARAM_NULL, user.getUsername(), user.getPassword(), user.getStatus());
