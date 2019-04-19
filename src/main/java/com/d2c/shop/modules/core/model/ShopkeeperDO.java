@@ -62,6 +62,9 @@ public class ShopkeeperDO extends BaseDelDO implements IMember {
     @TableField(exist = false)
     @ApiModelProperty(value = "登录返回token")
     private String loginToken;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "所属的门店")
+    private ShopDO shop;
 
     @JsonIgnore
     public String getPassword() {
