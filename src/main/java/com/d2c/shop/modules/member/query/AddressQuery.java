@@ -17,5 +17,8 @@ public class AddressQuery extends BaseQuery {
     @Condition(condition = ConditionEnum.EQ)
     @ApiModelProperty(value = "会员ID")
     private Long memberId;
+    @Condition(condition = ConditionEnum.EQ)
+    @ApiModelProperty(value = "会员账号")
+    private String memberAccount;
 
 }

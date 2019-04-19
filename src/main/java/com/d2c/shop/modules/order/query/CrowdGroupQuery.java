@@ -19,6 +19,9 @@ public class CrowdGroupQuery extends BaseQuery {
     @Condition(condition = ConditionEnum.EQ)
     @ApiModelProperty(value = "商品ID")
     private Long productId;
+    @Condition(condition = ConditionEnum.LIKE)
+    @ApiModelProperty(value = "商品名称")
+    private String productName;
     @Condition(condition = ConditionEnum.GE, field = "deadline")
     @ApiModelProperty(value = "过期时间起")
     private Date deadlineL;
