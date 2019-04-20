@@ -1,5 +1,6 @@
 package com.d2c.shop.modules.core.model;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.d2c.shop.common.api.annotation.Assert;
 import com.d2c.shop.common.api.base.extension.BaseDelDO;
@@ -22,6 +23,7 @@ import java.util.Date;
 @ApiModel(description = "店铺表")
 public class ShopDO extends BaseDelDO implements IShop {
 
+    @Excel(name = "名称")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "名称")
     private String name;
@@ -29,46 +31,61 @@ public class ShopDO extends BaseDelDO implements IShop {
     private String logo;
     @ApiModelProperty(value = "Banner")
     private String banner;
+    @Excel(name = "简介")
     @ApiModelProperty(value = "简介")
     private String summary;
+    @Excel(name = "公告")
     @ApiModelProperty(value = "公告")
     private String notice;
+    @Excel(name = "经营范围")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "经营范围")
     private String scope;
+    @Excel(name = "地址")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "地址")
     private String address;
+    @Excel(name = "电话")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "电话")
     private String telephone;
+    @Excel(name = "微信")
     @ApiModelProperty(value = "微信")
     private String wechat;
+    @Excel(name = "营业时间")
     @ApiModelProperty(value = "营业时间")
     private String hours;
+    @Excel(name = "退货地址")
     @ApiModelProperty(value = "退货地址")
     private String returnAddress;
+    @Excel(name = "认证", replace = {"已认证_1", "未认证_0"})
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "认证 1,0")
     private Integer authenticate;
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "状态 1,0")
     private Integer status;
+    @Excel(name = "有效期")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "有效期")
     private Date validDate;
+    @Excel(name = "企业名称")
     @ApiModelProperty(value = "企业名称")
     private String enterprise;
+    @Excel(name = "营业执照号")
     @ApiModelProperty(value = "营业执照号")
     private String licenseNum;
     @ApiModelProperty(value = "营业执照图")
     private String licensePic;
+    @Excel(name = "法人姓名")
     @ApiModelProperty(value = "法人姓名")
     private String corporationName;
+    @Excel(name = "法人身份证号")
     @ApiModelProperty(value = "法人身份证号")
     private String corporationCard;
     @ApiModelProperty(value = "法人身份证图")
     private String corporationPic;
+    @Excel(name = "资金余额")
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "资金余额")
     private BigDecimal balance;
