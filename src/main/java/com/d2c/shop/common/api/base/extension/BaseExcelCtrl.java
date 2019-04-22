@@ -5,11 +5,8 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.handler.inter.IExcelExportServer;
 import cn.afterturn.easypoi.view.PoiBaseView;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.d2c.shop.common.api.PageModel;
-import com.d2c.shop.common.api.Response;
-import com.d2c.shop.common.api.ResultCode;
 import com.d2c.shop.common.api.base.BaseCtrl;
 import com.d2c.shop.common.api.base.BaseDO;
 import com.d2c.shop.common.api.base.BaseQuery;
@@ -46,15 +43,14 @@ public abstract class BaseExcelCtrl<E extends BaseDO, Q extends BaseQuery> exten
 
     @ApiOperation(value = "分页导出数据")
     @RequestMapping(value = "/excel/page", method = RequestMethod.GET)
-    public R excelPage(PageModel page, Q query, ModelMap map, HttpServletRequest request,
-                       HttpServletResponse response) {
+    public void excelPage(PageModel page, Q query, ModelMap map, HttpServletRequest request,
+                          HttpServletResponse response) {
         ExportParams params = new ExportParams("excel数据表", "sheet1", ExcelType.XSSF);
         map.put(BigExcelConstants.CLASS, ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
         map.put(BigExcelConstants.PARAMS, params);
         map.put(BigExcelConstants.DATA_PARAMS, query);
         map.put(BigExcelConstants.DATA_INTER, excelExportServer);
         PoiBaseView.render(map, request, response, BigExcelConstants.EASYPOI_BIG_EXCEL_VIEW);
-        return Response.restResult(null, ResultCode.SUCCESS);
     }
 
 }
