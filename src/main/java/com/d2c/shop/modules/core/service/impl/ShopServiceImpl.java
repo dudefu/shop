@@ -32,8 +32,14 @@ public class ShopServiceImpl extends BaseService<ShopMapper, ShopDO> implements 
 
     @Override
     @Transactional
-    public int updateBalance(Long id, BigDecimal amount) {
-        return shopMapper.updateBalance(id, amount);
+    public int updateBalance(Long id, BigDecimal balance) {
+        return shopMapper.updateBalance(id, balance);
+    }
+
+    @Override
+    @Transactional
+    public int updateDeposit(Long id, BigDecimal deposit, BigDecimal recharge) {
+        return shopMapper.updateDeposit(id, deposit, recharge);
     }
 
 }

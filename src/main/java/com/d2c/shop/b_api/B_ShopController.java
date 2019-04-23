@@ -44,6 +44,8 @@ public class B_ShopController extends B_BaseController {
         shop.setStatus(1);
         shop.setAuthenticate(0);
         shop.setBalance(BigDecimal.ZERO);
+        shop.setDeposit(BigDecimal.ZERO);
+        shop.setRecharge(BigDecimal.ZERO);
         shop.setValidDate(DateUtil.offsetDay(new Date(), 365));
         shopService.doCreate(shop, loginKeeperHolder.getLoginAccount());
         return Response.restResult(shop, ResultCode.SUCCESS);

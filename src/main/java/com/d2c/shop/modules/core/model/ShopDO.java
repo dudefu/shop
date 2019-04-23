@@ -89,5 +89,13 @@ public class ShopDO extends BaseDelDO implements IShop {
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "资金余额")
     private BigDecimal balance;
+    @Excel(name = "保证金额")
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "保证金额")
+    private BigDecimal deposit;
+    @Excel(name = "充值金额")
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "充值金额")
+    private BigDecimal recharge;
 
 }

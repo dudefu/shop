@@ -12,6 +12,8 @@ public interface ShopService extends IService<ShopDO> {
 
     ShopDO doCreate(ShopDO shop, String account);
 
-    int updateBalance(Long id, BigDecimal amount);
+    int updateBalance(Long id, BigDecimal balance);
+
+    int updateDeposit(Long id, BigDecimal deposit, BigDecimal recharge);
 
 }
