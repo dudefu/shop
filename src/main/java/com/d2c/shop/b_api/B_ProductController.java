@@ -140,6 +140,7 @@ public class B_ProductController extends B_BaseController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public R delete(@PathVariable Long id) {
         ProductDO product = productService.getById(id);
+        Asserts.notNull(ResultCode.RESPONSE_DATA_NULL, product);
         ShopkeeperDO keeper = loginKeeperHolder.getLoginKeeper();
         Asserts.eq(product.getShopId(), keeper.getShopId(), "您不是本店店员");
         productService.removeById(id);
