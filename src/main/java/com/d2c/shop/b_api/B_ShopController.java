@@ -59,11 +59,13 @@ public class B_ShopController extends B_BaseController {
         if (shop.getEnterprise() != null) {
             ShopQuery query = new ShopQuery();
             query.setEnterprise(shop.getEnterprise());
+            query.setNotId(shop.getId());
             Asserts.gt(1, shopService.count(QueryUtil.buildWrapper(query)), "企业名称已存在");
         }
         if (shop.getName() != null) {
             ShopQuery query = new ShopQuery();
             query.setName(shop.getName());
+            query.setNotId(shop.getId());
             Asserts.gt(1, shopService.count(QueryUtil.buildWrapper(query)), "店铺名称已存在");
         }
         shop.setBalance(null);
