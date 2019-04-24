@@ -29,4 +29,5 @@ public class ShopQuery extends BaseQuery {
     @Condition(condition = ConditionEnum.NE)
     @ApiModelProperty(value = "排除ID")
     private Long notId;
+
 }
