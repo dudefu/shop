@@ -26,8 +26,8 @@ public class ShopQuery extends BaseQuery {
     @Condition(condition = ConditionEnum.EQ)
     @ApiModelProperty(value = "电话")
     private String telephone;
-    @Condition(condition = ConditionEnum.NE)
+    @Condition(condition = ConditionEnum.NE, field = "id")
     @ApiModelProperty(value = "排除ID")
-    private Long notId;
+    private Long excludeId;
 
 }

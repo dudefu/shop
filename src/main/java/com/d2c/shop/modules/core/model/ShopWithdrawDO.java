@@ -41,8 +41,20 @@ public class ShopWithdrawDO extends BaseDelDO {
     @ApiModelProperty(value = "到账金额")
     private BigDecimal arrivalAmount;
     @Assert(type = AssertEnum.NOT_NULL)
-    @ApiModelProperty(value = "状态 1,0")
+    @ApiModelProperty(value = "状态")
     private String status;
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "银行名称")
+    private String bankType;
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "开户行地区")
+    private String bankAddress;
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "开户行名称")
+    private String bankName;
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "银行卡号")
+    private String cardNum;
     @ApiModelProperty(value = "支付方式")
     private String payType;
     @ApiModelProperty(value = "支付流水")

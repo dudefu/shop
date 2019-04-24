@@ -47,15 +47,15 @@ public class B_ShopController extends B_BaseController {
         shop.setDeposit(BigDecimal.ZERO);
         shop.setRecharge(BigDecimal.ZERO);
         shop.setValidDate(DateUtil.offsetDay(new Date(), 365));
-        if (shop.getEnterprise() != null) {
-            ShopQuery query = new ShopQuery();
-            query.setEnterprise(shop.getEnterprise());
-            Asserts.gt(1, shopService.count(QueryUtil.buildWrapper(query)), "企业名称已存在");
-        }
         if (shop.getName() != null) {
             ShopQuery query = new ShopQuery();
             query.setName(shop.getName());
             Asserts.gt(1, shopService.count(QueryUtil.buildWrapper(query)), "店铺名称已存在");
+        }
+        if (shop.getEnterprise() != null) {
+            ShopQuery query = new ShopQuery();
+            query.setEnterprise(shop.getEnterprise());
+            Asserts.gt(1, shopService.count(QueryUtil.buildWrapper(query)), "企业名称已存在");
         }
         shopService.doCreate(shop, loginKeeperHolder.getLoginAccount());
         return Response.restResult(shop, ResultCode.SUCCESS);
@@ -66,17 +66,17 @@ public class B_ShopController extends B_BaseController {
     public R<ShopDO> update(@RequestBody ShopDO shop) {
         ShopkeeperDO keeper = loginKeeperHolder.getLoginKeeper();
         Asserts.eq(shop.getId(), keeper.getShopId(), "您不是本店店员");
-        if (shop.getEnterprise() != null) {
-            ShopQuery query = new ShopQuery();
-            query.setEnterprise(shop.getEnterprise());
-            query.setNotId(shop.getId());
-            Asserts.gt(1, shopService.count(QueryUtil.buildWrapper(query)), "企业名称已存在");
-        }
         if (shop.getName() != null) {
             ShopQuery query = new ShopQuery();
             query.setName(shop.getName());
-            query.setNotId(shop.getId());
+            query.setExcludeId(shop.getId());
             Asserts.gt(1, shopService.count(QueryUtil.buildWrapper(query)), "店铺名称已存在");
+        }
+        if (shop.getEnterprise() != null) {
+            ShopQuery query = new ShopQuery();
+            query.setEnterprise(shop.getEnterprise());
+            query.setExcludeId(shop.getId());
+            Asserts.gt(1, shopService.count(QueryUtil.buildWrapper(query)), "企业名称已存在");
         }
         shop.setBalance(null);
         shopService.updateById(shop);
