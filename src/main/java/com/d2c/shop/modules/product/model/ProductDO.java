@@ -1,6 +1,7 @@
 package com.d2c.shop.modules.product.model;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.d2c.shop.common.api.annotation.Assert;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author BaiCai
@@ -31,6 +33,8 @@ public class ProductDO extends BaseDelDO implements IUoLog {
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "店铺ID")
     private Long shopId;
+    @ApiModelProperty(value = "来源ID")
+    private Long sourceId;
     @ApiModelProperty(value = "条码")
     private String sn;
     @Assert(type = AssertEnum.NOT_NULL)
@@ -40,11 +44,23 @@ public class ProductDO extends BaseDelDO implements IUoLog {
     @ApiModelProperty(value = "图片")
     private String pic;
     @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "供货价")
+    private BigDecimal supplyPrice;
+    @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "销售价")
     private BigDecimal price;
     @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "利润")
+    private BigDecimal profit;
+    @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "商品库存")
     private Integer stock;
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "运费公式")
+    private String freight;
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "品牌ID")
+    private Long brandId;
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "品类ID")
     private Long categoryId;
@@ -74,11 +90,17 @@ public class ProductDO extends BaseDelDO implements IUoLog {
     @ApiModelProperty(value = "拼团优惠券ID")
     private Long couponId;
     @TableField(exist = false)
+    @ApiModelProperty(value = "品牌")
+    private BrandDO brand;
+    @TableField(exist = false)
     @ApiModelProperty(value = "品类树")
     private ProductCategoryDO category;
     @TableField(exist = false)
     @ApiModelProperty(value = "分类树")
     private ProductClassifyDO classify;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "规格分组")
+    private Map<String, List<JSONObject>> standard;
     @TableField(exist = false)
     @ApiModelProperty(value = "商品的SKU列表")
     private List<ProductSkuDO> skuList = new ArrayList<>();
