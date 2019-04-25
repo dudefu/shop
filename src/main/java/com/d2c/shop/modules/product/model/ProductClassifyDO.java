@@ -27,6 +27,8 @@ public class ProductClassifyDO extends BaseDO {
     private String name;
     @ApiModelProperty(value = "父级ID")
     private Long parentId;
+    @ApiModelProperty(value = "图片")
+    private String pic;
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "级别")
     private Integer level;

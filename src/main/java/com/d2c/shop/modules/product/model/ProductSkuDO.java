@@ -25,6 +25,8 @@ public class ProductSkuDO extends BaseDelDO {
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "店铺ID")
     private Long shopId;
+    @ApiModelProperty(value = "来源ID")
+    private Long sourceId;
     @Prevent
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "商品ID")
@@ -32,6 +34,9 @@ public class ProductSkuDO extends BaseDelDO {
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "规格")
     private String standard;
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "供货价")
+    private BigDecimal supplyPrice;
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "销售价")
     private BigDecimal sellPrice;

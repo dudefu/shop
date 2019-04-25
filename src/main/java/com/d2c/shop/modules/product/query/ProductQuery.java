@@ -39,6 +39,12 @@ public class ProductQuery extends BaseQuery {
     @ApiModelProperty(value = "品类ID")
     private Long[] categoryIds;
     @Condition(condition = ConditionEnum.EQ)
+    @ApiModelProperty(value = "分类ID")
+    private Long classifyId;
+    @Condition(condition = ConditionEnum.IN, field = "classify_id")
+    @ApiModelProperty(value = "分类ID")
+    private Long[] classifyIds;
+    @Condition(condition = ConditionEnum.EQ)
     @ApiModelProperty(value = "拼团 1,0,-1,8")
     private Integer crowd;
     @Condition(condition = ConditionEnum.GT, field = "crowd_start_date")

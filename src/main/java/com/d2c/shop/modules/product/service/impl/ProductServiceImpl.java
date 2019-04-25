@@ -31,6 +31,7 @@ public class ProductServiceImpl extends BaseService<ProductMapper, ProductDO> im
     @Transactional
     public ProductDO doCreate(ProductDO product) {
         this.initStock(product);
+        product.setProfit(product.getPrice().subtract(product.getSupplyPrice()));
         this.save(product);
         for (ProductSkuDO sku : product.getSkuList()) {
             sku.setProductId(product.getId());
@@ -46,6 +47,7 @@ public class ProductServiceImpl extends BaseService<ProductMapper, ProductDO> im
     @Transactional
     public boolean doUpdate(ProductDO product) {
         this.initStock(product);
+        product.setProfit(product.getPrice().subtract(product.getSupplyPrice()));
         ProductSkuQuery query = new ProductSkuQuery();
         query.setProductId(product.getId());
         List<ProductSkuDO> oldList = productSkuService.list(QueryUtil.buildWrapper(query));

@@ -10,21 +10,17 @@ import com.d2c.shop.common.api.Response;
 import com.d2c.shop.common.api.ResultCode;
 import com.d2c.shop.common.utils.QueryUtil;
 import com.d2c.shop.modules.core.model.ShopkeeperDO;
-import com.d2c.shop.modules.product.model.ProductCategoryDO;
-import com.d2c.shop.modules.product.model.ProductClassifyDO;
-import com.d2c.shop.modules.product.model.ProductDO;
-import com.d2c.shop.modules.product.model.ProductSkuDO;
+import com.d2c.shop.modules.product.model.*;
+import com.d2c.shop.modules.product.query.ProductClassifyQuery;
 import com.d2c.shop.modules.product.query.ProductQuery;
 import com.d2c.shop.modules.product.query.ProductSkuQuery;
-import com.d2c.shop.modules.product.service.ProductCategoryService;
-import com.d2c.shop.modules.product.service.ProductClassifyService;
-import com.d2c.shop.modules.product.service.ProductService;
-import com.d2c.shop.modules.product.service.ProductSkuService;
+import com.d2c.shop.modules.product.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +32,8 @@ import java.util.List;
 @RequestMapping("/b_api/product")
 public class B_ProductController extends B_BaseController {
 
+    @Autowired
+    private BrandService brandService;
     @Autowired
     private ProductService productService;
     @Autowired
@@ -87,6 +85,31 @@ public class B_ProductController extends B_BaseController {
         return Response.restResult(pager, ResultCode.SUCCESS);
     }
 
+    @ApiOperation(value = "商品选货列表")
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public R<Page<ProductDO>> page(PageModel page, ProductQuery query) {
+        query.setCrowd(0);
+        query.setStatus(1);
+        // 分类参数
+        if (query.getClassifyId() != null) {
+            ProductClassifyDO pc = productClassifyService.getById(query.getClassifyId());
+            if (pc != null && pc.getParentId() == null) {
+                // 一级大类特殊处理
+                ProductClassifyQuery pcq = new ProductClassifyQuery();
+                pcq.setParentId(pc.getId());
+                List<ProductClassifyDO> children = productClassifyService.list(QueryUtil.buildWrapper(pcq));
+                List<Long> classifyIds = new ArrayList<>();
+                children.forEach(item -> classifyIds.add(item.getId()));
+                if (classifyIds.size() > 0) {
+                    query.setCategoryId(null);
+                    query.setCategoryIds(classifyIds.toArray(new Long[0]));
+                }
+            }
+        }
+        Page<ProductDO> pager = (Page<ProductDO>) productService.page(page, QueryUtil.buildWrapper(query));
+        return Response.restResult(pager, ResultCode.SUCCESS);
+    }
+
     @ApiOperation(value = "根据ID查询")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public R<ProductDO> select(@PathVariable Long id) {
@@ -112,6 +135,8 @@ public class B_ProductController extends B_BaseController {
         query.setProductId(product.getId());
         List<ProductSkuDO> skuList = productSkuService.list(QueryUtil.buildWrapper(query));
         product.setSkuList(skuList);
+        BrandDO brand = brandService.getById(product.getBrandId());
+        product.setBrand(brand);
         return Response.restResult(product, ResultCode.SUCCESS);
     }
 

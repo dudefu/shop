@@ -12,10 +12,13 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ProductClassifyQuery extends BaseQuery {
+public class FreightQuery extends BaseQuery {
 
+    @Condition(condition = ConditionEnum.LIKE)
+    @ApiModelProperty(value = "名称")
+    private String name;
     @Condition(condition = ConditionEnum.EQ)
-    @ApiModelProperty(value = "父级ID")
-    private Long parentId;
+    @ApiModelProperty(value = "店铺ID")
+    private Long shopId;
 
 }
