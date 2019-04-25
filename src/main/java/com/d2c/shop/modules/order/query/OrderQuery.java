@@ -32,4 +32,7 @@ public class OrderQuery extends BaseQuery {
     @Condition(condition = ConditionEnum.EQ)
     @ApiModelProperty(value = "会员账号")
     private String memberAccount;
+    @Condition(condition = ConditionEnum.EQ)
+    @ApiModelProperty(value = "店铺名称")
+    private String shopName;
 }
