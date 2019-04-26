@@ -128,4 +128,5 @@ public class MenuController extends BaseCtrl<MenuDO, MenuQuery> {
         mySecurityMetadataSource.loadAllSource();
         return super.delete(ids);
     }
+
 }

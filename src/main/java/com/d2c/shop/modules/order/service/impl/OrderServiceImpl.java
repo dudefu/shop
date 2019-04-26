@@ -1,5 +1,6 @@
 package com.d2c.shop.modules.order.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.d2c.shop.common.api.base.BaseService;
 import com.d2c.shop.common.utils.ExecutorUtil;
@@ -30,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -93,6 +95,7 @@ public class OrderServiceImpl extends BaseService<OrderMapper, OrderDO> implemen
             }
         }
         // 创建订单
+        order.setExpireDate(DateUtil.offsetMinute(new Date(), order.getExpireMinute()));
         this.save(order);
         for (OrderItemDO orderItem : orderItemList) {
             // 扣减库存
@@ -239,7 +242,9 @@ public class OrderServiceImpl extends BaseService<OrderMapper, OrderDO> implemen
             CrowdGroupDO crowdGroup = crowdGroupService.getById(order.getCrowdId());
             crowdGroupService.doCancel(order.getCrowdId(), crowdGroup.popAvatars(order.getMemberId()));
         }
-        List<OrderItemDO> orderItemList = order.getOrderItemList();
+        OrderItemQuery itemQuery = new OrderItemQuery();
+        itemQuery.setOrderSn(new String[]{order.getSn()});
+        List<OrderItemDO> orderItemList = orderItemService.list(QueryUtil.buildWrapper(itemQuery));
         for (OrderItemDO orderItem : orderItemList) {
             // 返还库存
             productSkuService.doReturnStock(orderItem.getProductSkuId(), orderItem.getProductId(), orderItem.getQuantity());

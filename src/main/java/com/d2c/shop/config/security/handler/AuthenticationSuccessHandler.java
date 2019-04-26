@@ -127,5 +127,4 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
         return dirs;
     }
 
-
 }
