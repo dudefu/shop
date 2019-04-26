@@ -16,9 +16,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 public class OrderQuery extends BaseQuery {
 
-    @Condition(condition = ConditionEnum.LE, field = "expire_date")
-    @ApiModelProperty(value = "过期时间止")
-    public Date expireDateR;
     @Condition(condition = ConditionEnum.EQ)
     @ApiModelProperty(value = "店铺ID")
     private Long shopId;
@@ -37,5 +34,11 @@ public class OrderQuery extends BaseQuery {
     @Condition(condition = ConditionEnum.EQ)
     @ApiModelProperty(value = "会员账号")
     private String memberAccount;
+    @Condition(condition = ConditionEnum.EQ)
+    @ApiModelProperty(value = "店铺名称")
+    private String shopName;
+    @Condition(condition = ConditionEnum.LE, field = "expire_date")
+    @ApiModelProperty(value = "过期时间止")
+    public Date expireDateR;
 
 }
