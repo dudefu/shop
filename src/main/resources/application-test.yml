@@ -79,6 +79,7 @@ ignored:
   urls:
     - /b_api/**
     - /c_api/**
+    - /download/**
     - /login/expired
     - /swagger-ui.html
     - /swagger-resources/**
