@@ -1,12 +1,10 @@
 package com.d2c.shop.config.security.handler;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.d2c.shop.common.api.Response;
 import com.d2c.shop.common.api.ResultCode;
 import com.d2c.shop.common.utils.RequestUtil;
-import com.d2c.shop.config.security.authorization.MySecurityMetadataSource;
 import com.d2c.shop.config.security.constant.SecurityConstant;
 import com.d2c.shop.modules.security.model.MenuDO;
 import com.d2c.shop.modules.security.model.RoleDO;
@@ -26,7 +24,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -75,43 +76,19 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
         List<MenuDO> dirs = new ArrayList<>();
         List<MenuDO> menus = new ArrayList<>();
         List<MenuDO> buttons = new ArrayList<>();
-        Map<Long, MenuDO> dirMap = new ConcurrentHashMap<>();
-        Map<Long, MenuDO> menuMap = new ConcurrentHashMap<>();
         for (MenuDO item : mine) {
-            if (item.getType().equals(MenuDO.TypeEnum.MENU.name())) {
+            if (item.getType().equals(MenuDO.TypeEnum.DIR.name())) {
+                dirs.add(item);
+            } else if (item.getType().equals(MenuDO.TypeEnum.MENU.name())) {
                 menus.add(item);
-                menuMap.put(item.getId(), item);
-                // 加入父级的DIR
-                MenuDO parentDir = MySecurityMetadataSource.all.get(item.getParentId());
-                if (parentDir != null && dirMap.get(parentDir.getId()) == null) {
-                    MenuDO temp = ObjectUtil.cloneByStream(parentDir);
-                    dirs.add(temp);
-                    dirMap.put(temp.getId(), temp);
-                }
-            }
-        }
-        for (MenuDO item : mine) {
-            if (item.getType().equals(MenuDO.TypeEnum.BUTTON.name())) {
+            } else if (item.getType().equals(MenuDO.TypeEnum.BUTTON.name())) {
                 buttons.add(item);
-                // 加入父级的MENU
-                MenuDO parentMenu = MySecurityMetadataSource.all.get(item.getParentId());
-                if (parentMenu != null && menuMap.get(parentMenu.getId()) == null) {
-                    MenuDO temp1 = ObjectUtil.cloneByStream(parentMenu);
-                    menus.add(temp1);
-                    menuMap.put(temp1.getId(), temp1);
-                    // 加入父级的DIR
-                    MenuDO parentDir = MySecurityMetadataSource.all.get(parentMenu.getParentId());
-                    if (parentDir != null && dirMap.get(parentDir.getId()) == null) {
-                        MenuDO temp2 = ObjectUtil.cloneByStream(parentDir);
-                        dirs.add(temp2);
-                        dirMap.put(temp2.getId(), temp2);
-                    }
-                }
             }
         }
-        Collections.sort(dirs, (o1, o2) -> (o2.getSort()).compareTo(o1.getSort()));
-        Collections.sort(menus, (o1, o2) -> (o2.getSort()).compareTo(o1.getSort()));
-        Collections.sort(buttons, (o1, o2) -> (o2.getSort()).compareTo(o1.getSort()));
+        Map<Long, MenuDO> dirMap = new ConcurrentHashMap<>();
+        dirs.forEach(item -> dirMap.put(item.getId(), item));
+        Map<Long, MenuDO> menuMap = new ConcurrentHashMap<>();
+        menus.forEach(item -> menuMap.put(item.getId(), item));
         for (MenuDO menu : menus) {
             if (menu.getParentId() != null && dirMap.get(menu.getParentId()) != null) {
                 dirMap.get(menu.getParentId()).getChildren().add(menu);
