@@ -50,7 +50,9 @@ public class ShopkeeperController extends BaseCtrl<ShopkeeperDO, ShopkeeperQuery
             map.put(shop.getId(), shop);
         }
         for (ShopkeeperDO sk : pager.getRecords()) {
-            sk.setShop(map.get(sk.getShopId()));
+            if (sk.getShopId() != null) {
+                sk.setShop(map.get(sk.getShopId()));
+            }
         }
         return Response.restResult(pager, ResultCode.SUCCESS);
     }

@@ -2,6 +2,7 @@ package com.d2c.shop.b_api;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.d2c.shop.b_api.base.B_BaseController;
 import com.d2c.shop.common.api.Asserts;
@@ -157,6 +158,9 @@ public class B_ProductController extends B_BaseController {
     public R<ProductDO> update(@RequestBody ProductDO product) {
         ShopkeeperDO keeper = loginKeeperHolder.getLoginKeeper();
         Asserts.eq(product.getShopId(), keeper.getShopId(), "您不是本店店员");
+        if (product.getSourceId() != null && product.getCrowd() == 1) {
+            throw new ApiException("拼团不能设置调拨类型的商品");
+        }
         productService.doUpdate(product);
         return Response.restResult(productService.getById(product.getId()), ResultCode.SUCCESS);
     }

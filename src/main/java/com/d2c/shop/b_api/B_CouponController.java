@@ -14,10 +14,12 @@ import com.d2c.shop.modules.member.model.MemberCouponDO;
 import com.d2c.shop.modules.member.service.MemberCouponService;
 import com.d2c.shop.modules.product.model.CouponDO;
 import com.d2c.shop.modules.product.model.CouponProductDO;
+import com.d2c.shop.modules.product.model.ProductDO;
 import com.d2c.shop.modules.product.query.CouponProductQuery;
 import com.d2c.shop.modules.product.query.CouponQuery;
 import com.d2c.shop.modules.product.service.CouponProductService;
 import com.d2c.shop.modules.product.service.CouponService;
+import com.d2c.shop.modules.product.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ import java.util.List;
 @RequestMapping("/b_api/coupon")
 public class B_CouponController extends B_BaseController {
 
+    @Autowired
+    private ProductService productService;
     @Autowired
     private CouponService couponService;
     @Autowired
@@ -127,6 +131,8 @@ public class B_CouponController extends B_BaseController {
         for (CouponProductDO item : list) {
             CouponDO coupon = couponService.getById(item.getCouponId());
             Asserts.eq(coupon.getShopId(), keeper.getShopId(), "您不是本店店员");
+            ProductDO product = productService.getById(item.getProductId());
+            Asserts.isNull("优惠券不能绑定调拨类型的商品", product.getSourceId());
             CouponProductQuery query = new CouponProductQuery();
             query.setCouponId(item.getCouponId());
             query.setProductId(new Long[]{item.getProductId()});
