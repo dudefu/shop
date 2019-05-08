@@ -43,6 +43,8 @@ public class ProductDO extends BaseDelDO implements IUoLog {
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "图片")
     private String pic;
+    @ApiModelProperty(value = "视频")
+    private String video;
     @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "供货价")
     private BigDecimal supplyPrice;
