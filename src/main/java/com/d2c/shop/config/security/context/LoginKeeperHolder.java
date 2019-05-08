@@ -58,6 +58,8 @@ public class LoginKeeperHolder {
         return this.getLoginKeeper().getShopId();
     }
 
+    public Long getLoginKeeperId() { return this.getLoginKeeper().getId(); }
+
     public String getLoginAccount() {
         return this.getLoginKeeper().getAccount();
     }
