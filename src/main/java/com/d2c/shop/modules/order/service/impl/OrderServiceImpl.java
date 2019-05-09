@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -212,7 +213,7 @@ public class OrderServiceImpl extends BaseService<OrderMapper, OrderDO> implemen
         sf.setPaymentType(paymentType.name());
         sf.setPaymentSn(paymentSn);
         sf.setAmount(order.getPayAmount());
-        shopFlowService.doFlowing(sf);
+        shopFlowService.doFlowing(sf, order.getPayAmount(), BigDecimal.ZERO);
     }
 
     @Override

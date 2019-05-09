@@ -5,6 +5,7 @@ import com.d2c.shop.modules.core.mapper.ShopWithdrawMapper;
 import com.d2c.shop.modules.core.model.ShopFlowDO;
 import com.d2c.shop.modules.core.model.ShopWithdrawDO;
 import com.d2c.shop.modules.core.service.ShopFlowService;
+import com.d2c.shop.modules.core.service.ShopService;
 import com.d2c.shop.modules.core.service.ShopWithdrawService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,30 @@ import java.math.BigDecimal;
 public class ShopWithdrawServiceImpl extends BaseService<ShopWithdrawMapper, ShopWithdrawDO> implements ShopWithdrawService {
 
     @Autowired
+    private ShopService shopService;
+    @Autowired
     private ShopFlowService shopFlowService;
 
     @Override
     @Transactional
-    public int doWithdraw(ShopWithdrawDO shopWithdraw) {
+    public int doApplyWithdraw(ShopWithdrawDO shopWithdraw) {
         this.save(shopWithdraw);
+        return shopService.updateBalance(shopWithdraw.getShopId(), shopWithdraw.getAmount().multiply(new BigDecimal(-1)), shopWithdraw.getAmount());
+    }
+
+    @Override
+    @Transactional
+    public int doRefuseWithdraw(ShopWithdrawDO shopWithdraw) {
+        ShopWithdrawDO entity = new ShopWithdrawDO();
+        entity.setId(shopWithdraw.getId());
+        entity.setStatus(ShopWithdrawDO.StatusEnum.CLOSE.name());
+        this.updateById(entity);
+        return shopService.updateBalance(shopWithdraw.getShopId(), shopWithdraw.getAmount(), shopWithdraw.getAmount().multiply(new BigDecimal(-1)));
+    }
+
+    @Override
+    @Transactional
+    public int doSuccessWithdraw(ShopWithdrawDO shopWithdraw) {
         ShopFlowDO sf = new ShopFlowDO();
         sf.setStatus(1);
         sf.setType(ShopFlowDO.TypeEnum.WITHDRAW.name());
@@ -33,7 +52,7 @@ public class ShopWithdrawServiceImpl extends BaseService<ShopWithdrawMapper, Sho
         sf.setPaymentType(shopWithdraw.getPayType());
         sf.setPaymentSn(shopWithdraw.getPaySn());
         sf.setAmount(shopWithdraw.getAmount().multiply(new BigDecimal(-1)));
-        return shopFlowService.doFlowing(sf);
+        return shopFlowService.doFlowing(sf, BigDecimal.ZERO, shopWithdraw.getAmount().multiply(new BigDecimal(-1)));
     }
 
 }

@@ -44,6 +44,7 @@ public class B_ShopController extends B_BaseController {
         shop.setStatus(1);
         shop.setAuthenticate(0);
         shop.setBalance(BigDecimal.ZERO);
+        shop.setFrozen(BigDecimal.ZERO);
         shop.setDeposit(BigDecimal.ZERO);
         shop.setRecharge(BigDecimal.ZERO);
         shop.setValidDate(DateUtil.offsetDay(new Date(), 365));
@@ -79,6 +80,9 @@ public class B_ShopController extends B_BaseController {
             Asserts.gt(1, shopService.count(QueryUtil.buildWrapper(query)), "企业名称已存在");
         }
         shop.setBalance(null);
+        shop.setFrozen(null);
+        shop.setDeposit(null);
+        shop.setRecharge(null);
         shopService.updateById(shop);
         return Response.restResult(shopService.getById(shop.getId()), ResultCode.SUCCESS);
     }

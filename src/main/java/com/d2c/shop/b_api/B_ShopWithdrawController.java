@@ -55,7 +55,7 @@ public class B_ShopWithdrawController extends B_BaseController {
         shopWithdraw.setShopKeeperAccount(keeper.getAccount());
         shopWithdraw.setStatus(ShopWithdrawDO.StatusEnum.APPLY.name());
         shopWithdraw.setArrivalAmount(shopWithdraw.getAmount());
-        shopWithdrawService.doWithdraw(shopWithdraw);
+        shopWithdrawService.doApplyWithdraw(shopWithdraw);
         return Response.restResult(shopWithdraw, ResultCode.SUCCESS);
     }
 

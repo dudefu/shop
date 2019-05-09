@@ -7,7 +7,7 @@
 
     <update id="updateBalance">
         UPDATE CORE_SHOP
-        SET balance=balance + #{balance}, modify_date=now()
+        SET balance=balance + #{balance}, frozen=frozen + #{frozen}, modify_date=now()
         WHERE id = #{id}
     </update>
 

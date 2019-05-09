@@ -8,6 +8,10 @@ import com.d2c.shop.modules.core.model.ShopWithdrawDO;
  */
 public interface ShopWithdrawService extends IService<ShopWithdrawDO> {
 
-    int doWithdraw(ShopWithdrawDO shopWithdraw);
+    int doApplyWithdraw(ShopWithdrawDO shopWithdraw);
+
+    int doRefuseWithdraw(ShopWithdrawDO shopWithdraw);
+
+    int doSuccessWithdraw(ShopWithdrawDO shopWithdraw);
 
 }

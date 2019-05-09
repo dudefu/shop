@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 /**
  * @author BaiCai
  */
@@ -20,9 +22,9 @@ public class ShopFlowServiceImpl extends BaseService<ShopFlowMapper, ShopFlowDO>
 
     @Override
     @Transactional
-    public int doFlowing(ShopFlowDO shopFlow) {
+    public int doFlowing(ShopFlowDO shopFlow, BigDecimal balance, BigDecimal frozen) {
         this.save(shopFlow);
-        return shopService.updateBalance(shopFlow.getShopId(), shopFlow.getAmount());
+        return shopService.updateBalance(shopFlow.getShopId(), balance, frozen);
     }
 
 }

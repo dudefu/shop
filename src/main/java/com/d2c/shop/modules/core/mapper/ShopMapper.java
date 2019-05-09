@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  */
 public interface ShopMapper extends BaseMapper<ShopDO> {
 
-    int updateBalance(@Param("id") Long id, @Param("balance") BigDecimal balance);
+    int updateBalance(@Param("id") Long id, @Param("balance") BigDecimal balance, @Param("frozen") BigDecimal frozen);
 
     int updateDeposit(@Param("id") Long id, @Param("deposit") BigDecimal deposit, @Param("recharge") BigDecimal recharge);
 
