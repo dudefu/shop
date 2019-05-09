@@ -75,6 +75,12 @@ public class ProductDO extends BaseDelDO implements IUoLog {
     @ApiModelProperty(value = "状态 1,0")
     private Integer status;
     @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "买断 1,0")
+    private Integer buyout;
+    @Assert(type = AssertEnum.NOT_NULL)
+    @ApiModelProperty(value = "调拨 1,0")
+    private Integer allot;
+    @Assert(type = AssertEnum.NOT_NULL)
     @ApiModelProperty(value = "虚拟 1,0")
     private Integer virtual;
     @ApiModelProperty(value = "拼团 1,0,-1")

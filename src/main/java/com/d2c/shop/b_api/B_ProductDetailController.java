@@ -38,7 +38,7 @@ public class B_ProductDetailController extends B_BaseController {
 
     @ApiOperation(value = "新增")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public R<ProductDetailDO> insertDetail(@RequestBody ProductDetailDO productDetail) {
+    public R<ProductDetailDO> insert(@RequestBody ProductDetailDO productDetail) {
         productDetail.setShopId(loginKeeperHolder.getLoginShopId());
         productDetailService.save(productDetail);
         return Response.restResult(productDetail, ResultCode.SUCCESS);
